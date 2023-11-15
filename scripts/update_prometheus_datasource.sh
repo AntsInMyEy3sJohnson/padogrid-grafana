@@ -1,8 +1,5 @@
 #!/bin/bash
 
-DEFAULT_GRAFANA_REST_ENDPOINT="http://admin:admin@localhost:3000"
-DEFAULT_PROMETHEUS_DATASOURCE="Prometheus"
-
 grafana_rest_endpoint=$1
 prometheus_datasource=$2
 prometheus_url=$3
