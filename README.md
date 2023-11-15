@@ -1,4 +1,4 @@
-# padogrid-with-monitoring
+# padogrid-grafana
 
 Repository to host all stuff necessary for building a monitoring-ready image on top of a [PadoGrid image](https://hub.docker.com/r/padogrid/padogrid/tags). 
 
