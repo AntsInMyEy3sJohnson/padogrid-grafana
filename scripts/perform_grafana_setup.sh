@@ -1,7 +1,5 @@
 #!/bin/bash
 
-DEFAULT_GRAFANA_VERSION=10.0.2
-
 perform_grafana_product_update() {
 
    local version=$1

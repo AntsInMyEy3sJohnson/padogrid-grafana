@@ -1,56 +1,30 @@
 #!/bin/bash
 
 DEFAULT_GRAFANA_REST_ENDPOINT="http://admin:admin@localhost:3000"
-DEFAULT_GRAFANA_VERSION=10.0.2
+DEFAULT_GRAFANA_VERSION=10.2.0
 DEFAULT_PROMETHEUS_DATASOURCE="Prometheus"
 
 # Mandatory
-hazelcast_metrics_label=""
-hazelcast_metrics_cluster_filter=""
-prometheus_url=""
+hazelcast_metrics_label=$PADO_MONITORING_HAZELCAST_METRICS_LABEL
+hazelcast_metrics_cluster_filter=$PADO_MONITORING_HAZELCAST_METRICS_CLUSTER_FILTER
+prometheus_url=$PADO_MONITORING_PROMETHEUS_URL
 
 # Optional
-grafana_version=""
-grafana_rest_endpoint=""
-prometheus_datasource=""
+grafana_version=$PADO_MONITORING_GRAFANA_VERSION
+grafana_rest_endpoint=$PADO_MONITORING_GRAFANA_REST_ENDPOINT
+prometheus_datasource=$PADO_MONITORING_PROMETHEUS_DATASOURCE
 
 usage() {
    echo -e "Usage: $0
-      \t\t-l <name of the label to apply the hazelcast cluster filter to>
-      \t\t-f <hazelcast cluster filter>
-      \t\t-u <prometheus url for grafana to read metrics from>
-      \t\t[-e <grafana rest endpoint>]
-      \t\t[-v <grafana version>]
-      \t\t[-d <name of datasource in prometheus to be updated>]"
+      \tThe script reads the following environment variables:
+      \tPADO_MONITORING_HAZELCAST_METRICS_LABEL (mandatory): name of the label to apply the hazelcast cluster filter to 
+      \tPADO_MONITORING_HAZELCAST_METRICS_CLUSTER_FILTER (mandatory): hazelcast cluster filter
+      \tPADO_MONITORING_PROMETHEUS_URL (mandatory): prometheus url for grafana to read metrics from
+      \tPADO_MONITORING_GRAFANA_VERSION (optional): grafana version (default: 10.2.0)
+      \tPADO_MONITORING_GRAFANA_VERSION (optional): grafana rest endpoint (default: localhost:3000)
+      \tPADO_MONITORING_PROMETHEUS_DATASOURCE (optional): name of datasource in prometheus to be updated (default: Prometheus)"
    exit 1
 }
-
-while getopts "l:f:u:e:d:v:" option; do
-   case "${option}" in
-      l)
-         hazelcast_metrics_label="${OPTARG}"
-         ;;
-      f)
-         hazelcast_metrics_cluster_filter="${OPTARG}"
-         ;;
-      u)
-         prometheus_url=${OPTARG}
-         ;;
-      e)
-         grafana_rest_endpoint=${OPTARG}
-         ;;
-      d)
-         prometheus_datasource=${OPTARG}
-         ;;
-      v)
-         grafana_version="${OPTARG}"
-         ;;
-      \?)
-         usage
-         ;;
-   esac
-done
-
 
 if [ -z $hazelcast_metrics_label ] || [ -z $hazelcast_metrics_cluster_filter ]; then
    echo "both hazelcast metrics label and hazelcast metrics cluster filter must be provided"
@@ -82,5 +56,6 @@ fi
 
 ./update_prometheus_datasource.sh $grafana_rest_endpoint $prometheus_datasource $prometheus_url
 
-echo "successfully configured and launched grafana with prometheus datasource, showing grafana log..."
+echo -e "\nsuccessfully configured and launched grafana with prometheus datasource, entering tail for grafana log...\n"
+
 tail -f /opt/padogrid/workspaces/myrwe/myws/apps/grafana/log/grafana.log
