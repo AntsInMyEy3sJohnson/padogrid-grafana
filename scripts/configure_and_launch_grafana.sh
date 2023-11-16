@@ -6,7 +6,7 @@ DEFAULT_PROMETHEUS_DATASOURCE="Prometheus"
 
 # Mandatory
 hazelcast_metrics_label=$PADO_MONITORING_HAZELCAST_METRICS_LABEL
-hazelcast_metrics_cluster_filter=$PADO_MONITORING_HAZELCAST_METRICS_CLUSTER_FILTER
+hazelcast_metrics_clusters_filter=$PADO_MONITORING_HAZELCAST_METRICS_CLUSTERS_FILTER
 prometheus_url=$PADO_MONITORING_PROMETHEUS_URL
 
 # Optional
@@ -18,7 +18,7 @@ usage() {
    echo -e "Usage: $0
       \tThe script reads the following environment variables:
       \tPADO_MONITORING_HAZELCAST_METRICS_LABEL (mandatory): name of the label to apply the hazelcast cluster filter to 
-      \tPADO_MONITORING_HAZELCAST_METRICS_CLUSTER_FILTER (mandatory): hazelcast cluster filter
+      \tPADO_MONITORING_HAZELCAST_METRICS_CLUSTERS_FILTER (mandatory): hazelcast clusters filter (in the simplest case, this contains a comma-separated list of the names of the hazelcast clusters storing their metrics in prometheus)
       \tPADO_MONITORING_PROMETHEUS_URL (mandatory): prometheus url for grafana to read metrics from
       \tPADO_MONITORING_GRAFANA_VERSION (optional): grafana version (default: 10.2.0)
       \tPADO_MONITORING_GRAFANA_VERSION (optional): grafana rest endpoint (default: localhost:3000)
@@ -26,7 +26,7 @@ usage() {
    exit 1
 }
 
-if [ -z $hazelcast_metrics_label ] || [ -z $hazelcast_metrics_cluster_filter ]; then
+if [ -z $hazelcast_metrics_label ] || [ -z $hazelcast_metrics_clusters_filter ]; then
    echo "both hazelcast metrics label and hazelcast metrics cluster filter must be provided"
    usage
    exit 1
@@ -52,7 +52,7 @@ if [ -z $grafana_version  ]; then
    grafana_version=$DEFAULT_GRAFANA_VERSION
 fi
 
-./perform_grafana_setup.sh $hazelcast_metrics_label $hazelcast_metrics_cluster_filter $grafana_version
+./perform_grafana_setup.sh $hazelcast_metrics_label $hazelcast_metrics_clusters_filter $grafana_version
 
 ./update_prometheus_datasource.sh $grafana_rest_endpoint $prometheus_datasource $prometheus_url
 

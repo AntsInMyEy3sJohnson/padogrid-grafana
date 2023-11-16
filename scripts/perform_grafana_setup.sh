@@ -44,16 +44,16 @@ perform_start_grafana() {
 perform_cluster_template_update() {
 
    local label=$1
-   local hazelcast_cluster_name=$2
+   local hazelcast_cluster_names=$2
 
-   update_cluster_command="./update_cluster_templating -label $label -cluster $hazelcast_cluster_name"
+   update_cluster_command="./update_cluster_templating -label $label -clusters $hazelcast_cluster_names"
    execute_command "$update_cluster_command"
 
 }
 
 perform_folder_import() {
 
-   execute_command "./import_folder -f Hazelcast"
+   execute_command "./import_folder -folder Hazelcast"
 
 }
 
@@ -67,7 +67,7 @@ execute_command() {
 }
 
 hazelcast_metrics_label=$1
-hazelcast_metrics_cluster_filter=$2
+hazelcast_metrics_clusters_filter=$2
 grafana_version=$3
 
 echo "hazelcast metrics label: $hazelcast_metrics_label"
@@ -84,6 +84,6 @@ perform_switch_to_app_dir
 
 perform_start_grafana
 
-perform_cluster_template_update $hazelcast_metrics_label $hazelcast_metrics_cluster_filter
+perform_cluster_template_update $hazelcast_metrics_label $hazelcast_metrics_clusters_filter
 
 perform_folder_import
