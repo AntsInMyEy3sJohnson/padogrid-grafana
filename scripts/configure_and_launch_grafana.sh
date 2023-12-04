@@ -14,6 +14,14 @@ grafana_version=$PADO_MONITORING_GRAFANA_VERSION
 grafana_rest_endpoint=$PADO_MONITORING_GRAFANA_REST_ENDPOINT
 prometheus_datasource=$PADO_MONITORING_PROMETHEUS_DATASOURCE
 
+handle_sigterm() {
+  echo "Caught SIGTERM, terminating Grafana..."
+  ./perform_grafana_teardown.sh
+  exit 0
+}
+
+trap 'handle_sigterm' SIGTERM
+
 usage() {
    echo -e "Usage: $0
       \tThe script reads the following environment variables:
