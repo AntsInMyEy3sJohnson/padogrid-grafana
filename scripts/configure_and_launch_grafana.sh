@@ -26,7 +26,7 @@ usage() {
    exit 1
 }
 
-if [ -z $hazelcast_metrics_label ] || [ -z $hazelcast_metrics_clusters_filter ]; then
+if [ -z "$hazelcast_metrics_label" ] || [ -z "$hazelcast_metrics_clusters_filter" ]; then
    echo "both hazelcast metrics label and hazelcast metrics cluster filter must be provided"
    usage
    exit 1
@@ -47,14 +47,14 @@ if [ -z "$grafana_rest_endpoint" ]; then
    grafana_rest_endpoint=$DEFAULT_GRAFANA_REST_ENDPOINT
 fi
 
-if [ -z $grafana_version  ]; then
+if [ -z "$grafana_version"  ]; then
    echo "grafana version unspecified, using default"
    grafana_version=$DEFAULT_GRAFANA_VERSION
 fi
 
-./perform_grafana_setup.sh $hazelcast_metrics_label $hazelcast_metrics_clusters_filter $grafana_version
+./perform_grafana_setup.sh "$hazelcast_metrics_label" "$hazelcast_metrics_clusters_filter" "$grafana_version"
 
-./update_prometheus_datasource.sh $grafana_rest_endpoint $prometheus_datasource $prometheus_url
+./update_prometheus_datasource.sh "$grafana_rest_endpoint" "$prometheus_datasource" "$prometheus_url"
 
 echo -e "\nsuccessfully configured and launched grafana with prometheus datasource, entering tail for grafana log...\n"
 
