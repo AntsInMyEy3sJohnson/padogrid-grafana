@@ -14,13 +14,13 @@ grafana_version=$PADO_MONITORING_GRAFANA_VERSION
 grafana_rest_endpoint=$PADO_MONITORING_GRAFANA_REST_ENDPOINT
 prometheus_datasource=$PADO_MONITORING_PROMETHEUS_DATASOURCE
 
-handle_sigterm() {
-  echo "Caught SIGTERM, terminating Grafana..."
+handle_termination_signal() {
+  echo "Caught termination signal, terminating Grafana..."
   ./perform_grafana_teardown.sh
   exit 0
 }
 
-trap 'handle_sigterm' SIGTERM
+trap 'handle_termination_signal' SIGTERM SIGINT
 
 usage() {
    echo -e "Usage: $0
