@@ -52,7 +52,7 @@ perform_cluster_template_update() {
 
 perform_folder_import() {
 
-   execute_command "./import_folder -folder Hazelcast"
+   execute_command "./import_folder -all"
 
 }
 
