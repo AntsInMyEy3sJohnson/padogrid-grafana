@@ -44,9 +44,8 @@ perform_start_grafana() {
 perform_cluster_template_update() {
 
    local label=$1
-   local hazelcast_cluster_names=$2
 
-   update_cluster_command="./update_cluster_templating -label $label -clusters $hazelcast_cluster_names"
+   update_cluster_command="./padogrid_update_cluster_templating -label $label"
    execute_command "$update_cluster_command"
 
 }
@@ -67,11 +66,9 @@ execute_command() {
 }
 
 hazelcast_metrics_label=$1
-hazelcast_metrics_clusters_filter=$2
-grafana_version=$3
+grafana_version=$2
 
 echo "hazelcast metrics label: $hazelcast_metrics_label"
-echo "hazelcast metrics cluster filter: $hazelcast_metrics_clusters_filter"
 echo "grafana version: $grafana_version"
 
 perform_grafana_product_update "$grafana_version"
@@ -84,6 +81,6 @@ perform_switch_to_app_dir
 
 perform_start_grafana
 
-perform_cluster_template_update "$hazelcast_metrics_label" "$hazelcast_metrics_clusters_filter"
+perform_cluster_template_update "$hazelcast_metrics_label"
 
 perform_folder_import
