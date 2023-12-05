@@ -1,4 +1,4 @@
-FROM docker.io/padogrid/padogrid:0.9.30
+FROM docker.io/padogrid/padogrid:0.9.32
 
 USER 0
 
