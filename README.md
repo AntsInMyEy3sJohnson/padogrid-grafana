@@ -18,6 +18,19 @@ Although the scripts contained in this repository perform much of the configurat
 * `PADO_MONITORING_HAZELCAST_METRICS_LABEL`: The label Prometheus has attached to the Hazelcast metrics to distinguish them between logical namespaces. For example, in a Kubernetes cluster, this is usually simply `namespace` or `kubernetes_namespace`. In case you do wish to use the `padogrid-grafana` image outside the context of Hazelcast cluster monitoring, simply set this to a dummy value.
 * `PADO_MONITORING_PROMETHEUS_URL`: The URL of the Prometheus instance you wish this image's Grafana instance to read metrics from. In a Kubernetes cluster, the endpoint would typically be the FQDN of the Service object that provides access to the Prometheus Pod or Pods, i.e. something like this: `http://prometheus-service.prometheus.svc.cluster.local:9090`
 
+### Example For Plain Container Usage
+In case you would like to spin up a simple container based on the `padogrid-grafana` image, the following command might come in handy:
+
+```bash
+docker run -it --rm \
+    -e PADO_MONITORING_HAZELCAST_METRICS_LABEL=namespace \
+    -e PADO_MONITORING_PROMETHEUS_URL=http://10.211.55.6:9090 \
+    antsinmyey3sjohnson/padogrid-grafana:0.9.32.0
+```
+
+(For usage in Podman, simply provide `podman` rather than `docker` in the above command.)
+
+### Example For Helm Chart Usage
 Hazeltest's monitoring stack makes extensive use of the `padogrid-grafana` image, and you can find a Helm chart that deploys the image to a Kubernetes cluster in Hazeltest's [`resources/charts` directory](https://github.com/AntsInMyEy3sJohnson/hazeltest/tree/main/resources/charts).
 
 
