@@ -1,7 +1,7 @@
 #!/bin/bash
 
 DEFAULT_GRAFANA_REST_ENDPOINT="http://admin:admin@localhost:3000"
-DEFAULT_GRAFANA_VERSION=10.2.3
+DEFAULT_GRAFANA_VERSION=v10.2.3
 DEFAULT_PROMETHEUS_DATASOURCE="Prometheus"
 
 # Mandatory
@@ -26,8 +26,8 @@ usage() {
       \tThe script reads the following environment variables:
       \tPADO_MONITORING_HAZELCAST_METRICS_LABEL (mandatory): name of the label to apply the hazelcast cluster filter to 
       \tPADO_MONITORING_PROMETHEUS_URL (mandatory): prometheus url for grafana to read metrics from
-      \tPADO_MONITORING_GRAFANA_VERSION (optional): grafana version (default: 10.2.0)
-      \tPADO_MONITORING_GRAFANA_VERSION (optional): grafana rest endpoint (default: localhost:3000)
+      \tPADO_MONITORING_GRAFANA_VERSION (optional): grafana version (default: v10.2.3)
+      \$PADO_MONITORING_GRAFANA_REST_ENDPOINT (optional): grafana rest endpoint (default: localhost:3000)
       \tPADO_MONITORING_PROMETHEUS_DATASOURCE (optional): name of datasource in prometheus to be updated (default: Prometheus)"
    exit 1
 }
