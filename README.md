@@ -1,4 +1,4 @@
-# padogrid-grafana
+# padogrid-hazelmon
 
 ## Introduction
 
